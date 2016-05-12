@@ -184,6 +184,9 @@ HOST_ARCH=$(shell uname -m)
 .PHONY: kernel _kernel _kernel_links kernelconfig
 kernel: header _kernel
 
+kernelconfig: header
+	$(V)$(call BITBAKE,virtual/kernel -c menuconfig)
+
 _KERNEL_TARGET ?= _kernel
 
 DISTRO_KERNEL_SYMBOLS_FILE ?= $(BASE_VMLINUX_FILE)
@@ -380,12 +383,12 @@ images/$(CONFIGURED_PLATFORM).itb:: $(DISTRO_PLATFORM_ITS_FILE) $(MKIMAGE)
 
 # ONIE installer
 .PHONY: onie-installer
-onie-installer: header _kernel_links _fs _onie-installer
+onie-installer: header _onie-installer _kernel_links _fs_links
 
 DISTRO_ONIE_INSTALLER_FILE?= $(BASE_ONIE_INSTALLER_FILE)
 _onie-installer::
 	$(V) $(ECHO) "$(BLUE)Building ONIE Installer file ($(ONIE_INSTALLER_RECIPE))...$(GRAY)\n"
-	$(V)$(call BITBAKE,$(ONIE_INSTALLER_RECIPE))
+	$(V)$(call BITBAKE,$(ONIE_INSTALLER_RECIPE) $(DISTRO_FS_TARGET))
 	$(V)ln -sf $(DISTRO_ONIE_INSTALLER_FILE) images/`basename $(DISTRO_ONIE_INSTALLER_FILE)`
 
 ifneq ($(findstring onie-installer,$(MAKECMDGOALS)),)
