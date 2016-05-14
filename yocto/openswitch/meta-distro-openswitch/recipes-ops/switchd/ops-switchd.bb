@@ -9,6 +9,7 @@ SRC_URI = "git://git.openswitch.net/openswitch/ops-switchd;protocol=http;branch=
    file://switchd_sim.service \
    file://switchd_p4sim.service \
    file://switchd_xpliant.service \
+   file://switchd_goldengate.service \
 "
 
 SRCREV = "b5877a18b2728b474f20d5c298366aac0290c87e"
@@ -41,6 +42,8 @@ do_install_append() {
       install -m 0644 ${WORKDIR}/switchd_p4sim.service ${D}${systemd_unitdir}/system/switchd.service
    elif ${@bb.utils.contains('MACHINE_FEATURES','ops-container','true','false',d)}; then
       install -m 0644 ${WORKDIR}/switchd_sim.service ${D}${systemd_unitdir}/system/switchd.service
+   elif ${@bb.utils.contains('MACHINE_FEATURES','centec-goldengate','true','false',d)}; then
+      install -m 0644 ${WORKDIR}/switchd_goldengate.service ${D}${systemd_unitdir}/system/switchd.service
    fi
 
    install -d ${D}/usr/share/opsplugins
