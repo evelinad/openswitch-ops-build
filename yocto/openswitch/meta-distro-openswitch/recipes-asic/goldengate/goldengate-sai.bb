@@ -1,26 +1,47 @@
 UMMARY = "Centec SAI to program GoldenGate"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=476a2edccdd770fce19c5e019fabb437"
-
-DEPENDS = "libxml2 libpcap lmsensors"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
 
 DEPENDS_${PN} += "systemd"
 
 PROVIDES = "virtual/sai"
 RPROVIDES_${PN} = "virtual/sai"
 
-SRC_URI = "http://192.168.25.50/goldengate-sai.tar.bz2"
+SRC_URI = "git://github.com/Centecnetworks/goldengate-sai;protocol=https;user=jay-caoj:545296qq"
+
+SRCREV = "7609ee3370bd201d4aae8faf81212ae0dd2e94d7"
 
 inherit module-base
 inherit kernel-module-split
 
+addtask make_scripts after do_patch before do_compile
+do_make_scripts[lockfiles] = "${TMPDIR}/kernel-scripts.lock"
+do_make_scripts[depends] += "virtual/kernel:do_shared_workdir"
+# add all splitted modules to PN RDEPENDS
+KERNEL_MODULES_META_PACKAGE = "${PN}"
+
+EXTRA_OEMAKE += "KERNEL_SRC=${STAGING_KERNEL_DIR}"
+
 # When using AUTOREV, we need to force the package version
 # to the revision of git in order to avoid stale shared states.
+PV = "git${SRCPV}"
 
-S = "${WORKDIR}/goldengate-sai"
+S = "${WORKDIR}/git"
+EXTERNALSRC_BUILD??="${S}/output"
 
 # Avoid running make clean during configuration stage
 CLEANBROKEN = "1"
+
+do_compile() {
+    # Compile kernel modules
+    cd ${S}/dal
+    unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
+    oe_runmake KERNEL_PATH=${STAGING_KERNEL_DIR} KERNEL_VERSION=${KERNEL_VERSION} \
+        CC="${KERNEL_CC}" LD="${KERNEL_LD}" AR="${KERNEL_AR}" \
+        O=${STAGING_KERNEL_BUILDDIR} ${MAKE_TARGETS}
+}
+
+do_compile[depends] += "virtual/kernel:do_shared_workdir"
 
 do_install() {
     # Installing headers
@@ -32,11 +53,6 @@ do_install() {
     install -m 0755 ${S}/lib/libsai.so.1.0.0 ${D}${libdir}
     ln -s libsai.so.1.0.0 ${D}${libdir}/libsai.so
     install -m 0655 ${S}/lib/sai.pc ${D}${libdir}/pkgconfig
-
-
-    # Installing kernel modules
-    install -d ${D}/lib/modules/${KERNEL_VERSION}/extra
-    install -m 0644 ${S}/lib/modules/dal.ko ${D}/lib/modules/${KERNEL_VERSION}/extra
 }
 
 INSANE_SKIP_${PN} += "already-stripped"
