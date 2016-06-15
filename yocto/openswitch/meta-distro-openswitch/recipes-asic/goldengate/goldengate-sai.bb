@@ -7,7 +7,7 @@ DEPENDS_${PN} += "systemd"
 PROVIDES = "virtual/sai"
 RPROVIDES_${PN} = "virtual/sai"
 
-SRC_URI = "git://github.com/Centecnetworks/goldengate-sai;protocol=https;user=jay-caoj:545296qq"
+SRC_URI = "git://github.com/Centecnetworks/goldengate-sai;protocol=https"
 
 SRCREV = "7609ee3370bd201d4aae8faf81212ae0dd2e94d7"
 
