@@ -8,7 +8,7 @@ SRC_URI = "git://git.openswitch.net/openswitch/ops-l2macd;protocol=http;branch=r
            file://ops-l2macd.service \
            "
 
-SRCREV = "927142bb2d8cd1f688dbeb4625ec36f2f5a2eaf6"
+SRCREV = "b52e957e0546497119cee4779e0b05939ffda513"
 
 # When using AUTOREV, we need to force the package version to the revision of git
 # in order to avoid stale shared states.
@@ -16,6 +16,13 @@ PV = "git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "/usr/lib/cli/plugins/"
+do_install_append() {
+     install -d ${D}${systemd_unitdir}/system
+     install -m 0644 ${WORKDIR}/ops-l2macd.service ${D}${systemd_unitdir}/system/
+}
 
-inherit openswitch cmake
+FILES_${PN} += "/usr/lib/cli/plugins/"
+SYSTEMD_PACKAGES = "${PN}"
+SYSTEMD_SERVICE_${PN} = "ops-l2macd.service"
+
+inherit openswitch cmake systemd
