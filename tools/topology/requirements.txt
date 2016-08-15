@@ -19,7 +19,7 @@ pep8-naming
 
 pytest==2.8.4
 pytest-random
-pytest-xdist
+#pytest-xdist
 pytest-timeout
 pytest-logging
 pyyaml==3.11
@@ -30,6 +30,8 @@ pyyaml==3.11
 # Platform engines
 ##########################
 
+# topology
+-e git+https://github.com/HPENetworking/topology.git@e4a509bbe8b9523c20483e07f7a3eb4677970c6c#egg=topology
 # Docker
 # topology_docker==1.5.0
 -e git+https://github.com/saenzpa/topology_docker.git@master#egg=topology_docker
@@ -68,5 +70,14 @@ pyyaml==3.11
 # iperf command Communcation Library
 -e git+https://github.com/HPENetworking/topology_lib_iperf.git@master#egg=topology_lib_iperf
 
+# topology common library
+-e git+https://git.openswitch.net/openswitch/ops-topology-common@master#egg=topology_common
+
 # scapy Communication library
 -e git+https://github.com/HPENetworking/topology_lib_scapy.git@master#egg=topology_lib_scapy
+
+# ntpd communication library:
+-e git+https://github.com/HPENetworking/topology_lib_ntpd@0.1.0#egg=topology_lib_ntpd
+
+# vlan communication library:
+-e git+https://github.com/HPENetworking/topology_lib_vlan@0.1.0#egg=topology_lib_vlan
