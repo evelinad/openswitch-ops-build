@@ -8,6 +8,7 @@ do_install_append() {
     install -d ${D}/etc/datapath_profile
     install -m 0644 ${S}/platform/e582-48x2q4z/spec.txt ${D}/etc/spec/
     install -m 0644 ${S}/platform/e582-48x2q4z/datapath_cfg.txt ${D}/etc/datapath_profile/
+    install -m 0644 ${S}/platform/e582-48x2q4z/e582-48x2q4z_board_config.json ${D}/etc/spec
 
     # Install kernel modules
     cd ${S}/dal
