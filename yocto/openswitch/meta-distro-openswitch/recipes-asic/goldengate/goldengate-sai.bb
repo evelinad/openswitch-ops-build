@@ -9,7 +9,7 @@ RPROVIDES_${PN} = "virtual/sai"
 
 SRC_URI = "git://github.com/Centecnetworks/goldengate-sai;protocol=https"
 
-SRCREV = "27949ddb62083c2e5d72e4c123e2c2217b8234bc"
+SRCREV = "a231f7da04bf3e7a4ef298b6b60e48ae8178a84a"
 
 inherit module-base
 inherit kernel-module-split

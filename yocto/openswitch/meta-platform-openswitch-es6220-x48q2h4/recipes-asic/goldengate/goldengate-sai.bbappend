@@ -8,7 +8,7 @@ do_install_append() {
     install -d ${D}/etc/datapath_profile
     install -m 0644 ${S}/platform/es6220-x48q2h4/spec.txt ${D}/etc/spec/
     install -m 0644 ${S}/platform/es6220-x48q2h4/datapath_cfg.txt ${D}/etc/datapath_profile/
-    install -m 0644 ${S}/platform/es6220-x48q2h4/e582-48x2q4z_board_config.json ${D}/etc/spec
+    install -m 0644 ${S}/platform/es6220-x48q2h4/board_config.json ${D}/etc/spec
 
     # Install kernel modules
     cd ${S}/dal
