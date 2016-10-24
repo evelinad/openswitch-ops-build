@@ -5,11 +5,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 DEPENDS = "ops-utils ops-ovsdb ops-cli ops-switchd ops-supportability"
 FILES_${PN} += "/usr/lib/cli/plugins/"
 
-SRC_URI = "git://github.com/Centecnetworks/openswitch-ops-stpd;protocol=http \
+SRC_URI = "git://git.openswitch.net/openswitch/ops-stpd;protocol=http;branch=rel/dill \
            file://ops-stpd.service \
            "
 
-SRCREV = "bece938f8b731a021411e901bf6dca67752c65ef"
+SRCREV = "c189676260bfe11c824721a3ef93f1096e89fa3f"
 
 # When using AUTOREV, we need to force the package version to the revision of git
 # in order to avoid stale shared states.
