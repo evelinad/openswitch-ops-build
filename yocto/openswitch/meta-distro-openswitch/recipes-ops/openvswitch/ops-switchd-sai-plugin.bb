@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/Centecnetworks/openswitch-ops-switchd-sai-plugin;pro
 
 FILES_${PN} = "${libdir}/openvswitch/plugins"
 
-SRCREV = "2dbb297b6af950b6213105001237f5ecaabc55e7"
+SRCREV = "e046b3fde0bc6a5a55f529aa8f893071f3c5eedc"
 
 # When using AUTOREV, we need to force the package version to the revision of git
 # in order to avoid stale shared states.
